@@ -10,6 +10,7 @@ use Slim\PDO\Statement\SelectStatement;
 use Slim\PDO\Statement\InsertStatement;
 use Slim\PDO\Statement\UpdateStatement;
 use Slim\PDO\Statement\DeleteStatement;
+use Slim\PDO\Statement\StoredProcedureStatement;
 
 /**
  * Class Database.
@@ -84,5 +85,20 @@ class Database extends \PDO
     public function delete($table = null)
     {
         return new DeleteStatement($this, $table);
+    }
+
+    /**
+     * Create an statement that handles store procedure.
+     *
+     * While creating this statement, this assumed that every thing is done in
+     * the stored procedure. For more detail see the class description.
+     *
+     * @param null $execText Like exec, call, execute procedure, ...
+     *
+     * @return StoredProcedureStatement.
+     */
+    public function execSP($execText = null)
+    {
+        return new StoredProcedureStatement($this, $execText);
     }
 }
