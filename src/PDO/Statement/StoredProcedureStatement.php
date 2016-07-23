@@ -30,8 +30,11 @@ use Slim\PDO\Database;
  */
 class StoredProcedureStatement extends StatementContainer
 {
+    const DATA_TYPE = 'data_type';
+    const LENGTH = 'length';
+
     /**
-     * @var string spName Name of the stored procedure
+     * @var string storedProcedureName Name of the stored procedure
      */
     protected $storedProcedureName;
 
@@ -102,7 +105,7 @@ class StoredProcedureStatement extends StatementContainer
         }
 
         $sql = $this->execText;
-        $sql .= ' ' . $this->spName;
+        $sql .= ' ' . $this->storedProcedureName;
         $sql .= $this->getPlaceholders();
 
         return $sql;
@@ -132,9 +135,6 @@ class StoredProcedureStatement extends StatementContainer
      */
     protected function bindValue(\PDOStatement $stmt)
     {
-        private const DATE_TYPE = 'data_type';
-        private const length = 'length';
-
         $index = 0;
         $values = $this->values;
         $valuesCount = count($values);
@@ -149,12 +149,12 @@ class StoredProcedureStatement extends StatementContainer
             if (count(array_values($values[$i])[0]) > 0) {
                 $value = array_values($values[$i])[0];
 
-                if (key_exists(DATA_TYPE, $value)) {
-                    $type = $value[DATA_TYPE];
+                if (key_exists(self::DATA_TYPE, $value)) {
+                    $type = $value[self::DATA_TYPE];
                 }
 
-                if (key_exists(LENGTH, $value)) {
-                    $length = $value[LENGTH];
+                if (key_exists(self::LENGTH, $value)) {
+                    $length = $value[self::LENGTH];
                 }
             }
 
