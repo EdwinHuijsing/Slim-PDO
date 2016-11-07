@@ -485,7 +485,7 @@ abstract class StatementContainer
     /**
      * @return \PDOStatement
      */
-    private function getStatement()
+    protected function getStatement()
     {
         $sql = $this;
 
